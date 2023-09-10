@@ -1,8 +1,9 @@
-import { useRef, useState } from 'react'
-import { MeshProps, useFrame } from '@react-three/fiber'
+import { useRef, useState } from "react"
+import { MeshProps, useFrame } from "@react-three/fiber"
+import { Mesh } from "three"
 
-const Box = (props: MeshProps) => {
-  const ref = useRef<THREE.Mesh>(null)
+const Box = (props: MeshProps): React.ReactElement => {
+  const ref = useRef<Mesh>(null)
   const [hovered, hover] = useState(false)
   const [clicked, click] = useState(false)
 
@@ -17,7 +18,7 @@ const Box = (props: MeshProps) => {
       ref={ref}
       scale={clicked ? 1.5 : 1}
       onClick={() => click(!clicked)}
-      onPointerOver={() => hover(true)}
+      onPointerOver={(event) => (event.stopPropagation(), hover(true))}
       onPointerOut={() => hover(false)}>
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
